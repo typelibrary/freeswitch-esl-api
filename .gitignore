@@ -1,5 +1,8 @@
 *.class
 
+# Build Dir #
+target/
+
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
