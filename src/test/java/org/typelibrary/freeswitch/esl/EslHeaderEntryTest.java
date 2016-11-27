@@ -1,9 +1,5 @@
 package org.typelibrary.freeswitch.esl;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -16,76 +12,65 @@ public class EslHeaderEntryTest {
         entry = new EslHeaderEntry("name", "value");
         Assert.assertEquals("name", entry.getName());
         Assert.assertEquals("value", entry.getValue());
-        Assert.assertNull(entry.getArray());
     }
 
     @Test
-    public void testStripValue() {
+    public void testValueUnProcessing() {
         entry = new EslHeaderEntry("name", "  value");
         Assert.assertEquals("name", entry.getName());
-        Assert.assertEquals("value", entry.getValue());
-        Assert.assertNull(entry.getArray());
+        Assert.assertEquals("  value", entry.getValue());
         entry = new EslHeaderEntry("name", "\t\tvalue");
         Assert.assertEquals("name", entry.getName());
-        Assert.assertEquals("value", entry.getValue());
-        Assert.assertNull(entry.getArray());
+        Assert.assertEquals("\t\tvalue", entry.getValue());
         entry = new EslHeaderEntry("name", " \tvalue");
         Assert.assertEquals("name", entry.getName());
-        Assert.assertEquals("value", entry.getValue());
-        Assert.assertNull(entry.getArray());
+        Assert.assertEquals(" \tvalue", entry.getValue());
         entry = new EslHeaderEntry("name", "\t value");
         Assert.assertEquals("name", entry.getName());
-        Assert.assertEquals("value", entry.getValue());
-        Assert.assertNull(entry.getArray());
+        Assert.assertEquals("\t value", entry.getValue());
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void testPlainConsNullName() {
+        entry = new EslHeaderEntry(null, "value1");
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void testPlainConsIllegalName() {
+        entry = new EslHeaderEntry("na:me", "value1");
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void testPlainConsNullValue() {
+        entry = new EslHeaderEntry("key1", (String) null);
     }
 
     @Test
-    public void testArray() {
-        entry = new EslHeaderEntry("name", Arrays.asList("v1", "v2"));
-        Assert.assertEquals("name", entry.getName());
-        Assert.assertNull(entry.getValue());
-        Assert.assertEquals(Arrays.asList("v1", "v2"), entry.getArray());
+    public void testEquals() {
+        entry = new EslHeaderEntry("key1", "value1");
+        Assert.assertEquals(true, entry.equals(entry));
+        Assert.assertEquals(false, entry.equals(null));
+        Assert.assertEquals(false, entry.equals("key1"));
+
+        EslHeaderEntry other1 = new EslHeaderEntry("key1", "value2");
+        Assert.assertEquals(true, entry.equals(other1));
+
+        EslHeaderEntry other2 = new EslHeaderEntry("key2", "value2");
+        Assert.assertEquals(false, entry.equals(other2));
     }
 
     @Test
-    public void testArrayParse() {
+    public void testHashCode() {
+        entry = new EslHeaderEntry(new String("key1"), "value1");
+        
+        EslHeaderEntry other1 = new EslHeaderEntry(new String("key1"), "value2");
+        Assert.assertEquals(entry.hashCode(), other1.hashCode());
 
-        entry = new EslHeaderEntry("name", "ARRAY::value");
-        Assert.assertEquals("name", entry.getName());
-        Assert.assertNull(entry.getValue());
-        Assert.assertEquals(Arrays.asList("value"), entry.getArray());
+        EslHeaderEntry other2 = new EslHeaderEntry("KEY1", "value3");
+        Assert.assertEquals(entry.hashCode(), other2.hashCode());
 
-        entry = new EslHeaderEntry("name", "ARRAY::value|:value1");
-        Assert.assertEquals("name", entry.getName());
-        Assert.assertNull(entry.getValue());
-        Assert.assertEquals(Arrays.asList("value", "value1"), entry.getArray());
-
-        entry = new EslHeaderEntry("name", "ARRAY::value|:|:value1");
-        Assert.assertEquals("name", entry.getName());
-        Assert.assertNull(entry.getValue());
-        Assert.assertEquals(Arrays.asList("value", "", "value1"), entry.getArray());
-
-    }
-
-    @Test(expected=UnsupportedOperationException.class)
-    public void testImmutableArray() {
-        List<String> arrayIn = new ArrayList<>();
-        arrayIn.add("v1");
-        arrayIn.add("v2");
-        entry = new EslHeaderEntry("name", arrayIn);
-        Assert.assertEquals("name", entry.getName());
-        Assert.assertNull(entry.getValue());
-        List<String> array = entry.getArray();
-        array.add("v3");
-    }
-
-    @Test(expected=UnsupportedOperationException.class)
-    public void testImmutableArrayParse() {
-        entry = new EslHeaderEntry("name", "ARRAY::v1|:v2");
-        Assert.assertEquals("name", entry.getName());
-        Assert.assertNull(entry.getValue());
-        List<String> array = entry.getArray();
-        array.add("v3");
+        EslHeaderEntry other3 = new EslHeaderEntry("key2", "value3");
+        Assert.assertNotEquals(entry.hashCode(), other3.hashCode());
     }
 
 }

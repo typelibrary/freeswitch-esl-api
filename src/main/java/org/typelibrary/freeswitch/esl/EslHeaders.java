@@ -52,18 +52,6 @@ public class EslHeaders {
         }
     }
 
-    public List<String> getArray(String name) {
-        final String normalizedName = name.toLowerCase(Locale.ROOT);
-        final int normalizedHashCode = normalizedName.hashCode();
-        Optional<EslHeaderEntry> header = headers.stream().filter(h -> h.getNormalizedHashCode() == normalizedHashCode)
-                .filter(h -> h.getNormalizedName().equals(normalizedName)).findFirst();
-        if (header.isPresent()) {
-            return header.get().getArray();
-        } else {
-            return null;
-        }
-    }
-
     public List<String> getNames() {
         return headers.stream().map(h -> h.getName()).collect(Collectors.toList());
     }
@@ -102,19 +90,22 @@ public class EslHeaders {
     public int size() {
         return headers.size();
     }
-    
+
     EslHeaders overwrite(String name, String value) {
         String normalizedName = name.toLowerCase(Locale.ROOT);
         List<EslHeaderEntry> newHeaders = new LinkedList<>();
         boolean found = false;
         for (EslHeaderEntry header : headers) {
             if (!found && normalizedName.equals(header.getNormalizedName())) {
-                newHeaders.add(new EslHeaderEntry(name, value));
+                if (value != null) {
+                    newHeaders.add(new EslHeaderEntry(name, value));
+                }
+                found = true;
             } else {
                 newHeaders.add(header);
             }
         }
-        if (!found) {
+        if (!found && value != null) {
             newHeaders.add(new EslHeaderEntry(name, value));
         }
         return new EslHeaders(newHeaders, false);

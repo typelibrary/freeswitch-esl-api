@@ -10,12 +10,14 @@ public class EslMessageTest {
     private String body;
     private EslMessage msg;
     
+    @Test
     public void testHeadersNull() {
         msg = new EslMessage(headers);
         Assert.assertEquals(0, msg.getHeaders().size());
         Assert.assertEquals("", msg.getBody());
     }
     
+    @Test
     public void testBodyNull() {
         msg = new EslMessage(body);
         Assert.assertEquals(0, msg.getHeaders().size());
@@ -30,18 +32,30 @@ public class EslMessageTest {
         Assert.assertEquals("", msg.getBody());
     }
 
+    @Test
     public void testHeadersAndBodyWithHeadersNull() {
         body = "content";
         msg = new EslMessage(headers, body);
         Assert.assertEquals(1, msg.getHeaders().size());
         Assert.assertEquals("content", msg.getBody());
-        Assert.assertEquals(7, headers.getContentLength());
+        Assert.assertEquals(7, msg.getHeaders().getContentLength());
     }
 
+    @Test
     public void testHeadersAndBodyWithHeadersAndBodyNull() {
         msg = new EslMessage(headers, body);
         Assert.assertEquals(0, msg.getHeaders().size());
         Assert.assertEquals("", msg.getBody());
+    }
+
+    @Test
+    public void testToString() {
+        msg = EslMessage.EMPTY;
+        Assert.assertEquals("", msg.toString());
+        msg = new EslMessage(new EslHeaders("name", "value"));
+        Assert.assertEquals("name: value\n", msg.toString());
+        msg = new EslMessage("body");
+        Assert.assertEquals("Content-Length: 4\n\nbody", msg.toString());
     }
 
     @Before
