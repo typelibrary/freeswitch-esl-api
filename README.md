@@ -4,6 +4,8 @@ freeswitch-esl-api
 
 [![Travis](https://travis-ci.org/typelibrary/freeswitch-esl-api.svg?branch=master)](https://travis-ci.org/typelibrary/freeswitch-esl-api)
 
+[![codecov](https://codecov.io/gh/typelibrary/freeswitch-esl-api/branch/master/graph/badge.svg)](https://codecov.io/gh/typelibrary/freeswitch-esl-api)
+
 **freeswitch-esl-api** is a Java based API for the Event Socket Library of the
 [FreeSWITCH](https://freeswitch.org/) server.
 
