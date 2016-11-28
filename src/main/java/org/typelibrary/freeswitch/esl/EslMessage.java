@@ -1,5 +1,9 @@
 package org.typelibrary.freeswitch.esl;
 
+/**
+ * The unit of communication used within the ESL protocol.
+ * 
+ */
 public final class EslMessage {
 
     public static final EslMessage EMPTY = new EslMessage();

@@ -3,6 +3,7 @@ package org.typelibrary.freeswitch.esl;
 import java.util.Locale;
 
 /**
+ * An individual key - value pair within an ESL header.
  * 
  * Names
  * <ul>
@@ -10,12 +11,12 @@ import java.util.Locale;
  * leading and/or trailing whitespace or even just whitespace. (esl.c/esl_recv_event)
  * </ul>
  *  
- *  Values
- *  <ul>
- *  <li>Leading spaces and tabs are stripped for "main" header (esl.c/esl_recv_event)
- *  <li>Leading spaces are stripped for "event" header (esl.c/esl_recv_event)
- *  <li>Trailing whitespace is not stripped (esl.c/esl_recv_event)
- *  </ul>
+ * Values
+ * <ul>
+ * <li>Leading spaces and tabs are stripped for "main" header (esl.c/esl_recv_event)
+ * <li>Leading spaces are stripped for "event" header (esl.c/esl_recv_event)
+ * <li>Trailing whitespace is not stripped (esl.c/esl_recv_event)
+ * </ul>
  */
 public final class EslHeaderEntry {
 

@@ -1,5 +1,9 @@
 package org.typelibrary.freeswitch.esl;
 
+/**
+ * An event sent from a Freeswitch server to application code.
+ * 
+ */
 public final class EslEvent {
 
     private final EslMessage message;

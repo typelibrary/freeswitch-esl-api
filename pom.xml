@@ -8,7 +8,7 @@
     <packaging>jar</packaging>
     
     <name>freeswitch-esl-api</name>
-    <description>An API to for the Event Socket Library of Freeswitch servers.</description>
+    <description>An API for the Event Socket Library of Freeswitch servers.</description>
     <url>http://maven.apache.org</url>
 
 	<licenses>

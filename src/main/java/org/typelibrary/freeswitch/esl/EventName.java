@@ -2,6 +2,13 @@ package org.typelibrary.freeswitch.esl;
 
 import java.util.Locale;
 
+/**
+ * The event names supported by the ESL protocol. This class should be kept synchronized with the
+ * EVENT_NAMES array in /src/switch_event.c.
+ * 
+ * @see <a href="https://freeswitch.org/stash/projects/FS/repos/freeswitch/browse/src/switch_event.c?at=v1.6" target="_parent">switch_event.c (v1.6)</a>
+ * 
+ */
 public enum EventName {
 
     CUSTOM,
@@ -62,6 +69,8 @@ public enum EventName {
     RE_SCHEDULE,
     RELOADXML,
     NOTIFY,
+    PHONE_FEATURE,
+    PHONE_FEATURE_SUBSCRIBE,
     SEND_MESSAGE,
     RECV_MESSAGE,
     REQUEST_PARAMS,
@@ -73,6 +82,7 @@ public enum EventName {
     SERVER_DISCONNECTED,
     SEND_INFO,
     RECV_INFO,
+    RECV_RTCP_MESSAGE,
     CALL_SECURE,
     NAT,
     RECORD_START,
@@ -83,8 +93,15 @@ public enum EventName {
     FAILURE,
     SOCKET_DATA,
     MEDIA_BUG_START,
+    MEDIA_BUG_STOP,
+    CONFERENCE_DATA_QUERY,
+    CONFERENCE_DATA,
+    CALL_SETUP_REQ,
+    CALL_SETUP_RESULT,
+    CALL_DETAIL,
+    DEVICE_STATE,
     ALL;
-
+    
     public static EventName parseEventName(String name) {
         if (name == null) {
             return null;

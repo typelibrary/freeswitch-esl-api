@@ -1,5 +1,9 @@
 package org.typelibrary.freeswitch.esl;
 
+/**
+ * A command to be sent from application code to a Freeswitch server.
+ *
+ */
 public final class EslCommand {
 
     private final String command;

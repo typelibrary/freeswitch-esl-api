@@ -1,6 +1,6 @@
 package org.typelibrary.freeswitch.esl;
 
-public final class EslResult {
+final class EslResult {
 
     private final boolean success;
     private final EslMessage message;

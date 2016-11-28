@@ -10,7 +10,11 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class EslHeaders {
+/**
+ * The headers, comprising of key - value pairs, that are embedded in an ESL Message or Event.
+ * 
+ */
+public final class EslHeaders {
 
     public static final EslHeaders EMPTY = new EslHeaders();
     
